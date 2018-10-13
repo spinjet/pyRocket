@@ -3,7 +3,7 @@ from scipy.integrate import odeint
 from matplotlib import pyplot as plt
 
 v0 = 100 #m/s Initial speed
-th0 = 45 #deg Initial flight path angle
+th0 =35 * (np.pi / 180) #deg Initial flight path angle
 h0 = 0 #m launching altitude
 s0 = 0 #m launching position
 
@@ -27,7 +27,7 @@ def ddtSys(Z, t):
     V, Th = Z
     return [ddtV(V, Th), ddtTh(V, Th)]
 
-t = np.linspace(0, 20, 1000)
+t = np.linspace(0, 50, 5000)
 
 Z0 = [v0, th0]
 Z = odeint(ddtSys, Z0, t)
@@ -36,13 +36,16 @@ v, th = Z.T
 vx = v * np.cos(th)
 vy = v * np.sin(th)
 
+
 h = np.zeros(len(t))
 h[0] = h0
 for i in range(0,len(t)-1):
     h[i+1] = h[i] + vy[i] * (t[i+1] - t[i])
 
+
 h = np.array(list(filter(lambda x : x >= 0, h)))
 t = t[0:len(h)]
+
 
 s = np.zeros(len(t))
 s[0] = s0
@@ -53,6 +56,7 @@ for i in range(0,len(t)-1):
 # vy = list(filter(lambda x : x >= 0, vy))
 # vx = vx[0:len(vy)]
 # t = t[0:len(vy)]
+
 
 outText = """***TRAJECTORY RESULTS***
 
