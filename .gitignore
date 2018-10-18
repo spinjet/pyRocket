@@ -102,5 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-pyLaunch.code-workspace
+.code-workspace
 .vscode/launch.json
+
